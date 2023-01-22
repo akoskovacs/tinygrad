@@ -57,7 +57,7 @@ RSpec.describe TinyGrad::Value do
     end
 
     it "has the right operation" do
-      expect(c.op).to eq("+")
+      expect(c.op.name).to eq("+")
     end
   end
 
@@ -86,7 +86,7 @@ RSpec.describe TinyGrad::Value do
     end
 
     it "has the right operation" do
-      expect(c.op).to eq("*")
+      expect(c.op.name).to eq("*")
     end
   end
 
@@ -110,7 +110,7 @@ RSpec.describe TinyGrad::Value do
     end
 
     it "has the right operation" do
-      expect(d.op).to eq("+")
+      expect(d.op.name).to eq("+")
     end
   end
 end

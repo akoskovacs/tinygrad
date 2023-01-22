@@ -16,10 +16,12 @@ require "irb"
 $a = TinyGrad::Value.new(2, label: "a")
 $b = TinyGrad::Value.new(-3, label: "b")
 $c = TinyGrad::Value.new(10, label: "c")
-$d = $a * $b + $c
-$d.label = "d"
+$e = $a * $b ; $e.label = 'e'
+$d = $e + $c ; $d.label = 'd'
+$f = TinyGrad::Value.new(-2, label: 'f')
+$L = $d * $f ; $L.label = 'L'
 
-g = TinyGrad::Graph.new
-g.draw($d, file_name: "d.svg")
+$graph = TinyGrad::Graph.new
+$graph.draw($L, file_name: "L.svg")
 
 IRB.start(__FILE__)

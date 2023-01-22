@@ -7,10 +7,12 @@ module TinyGrad
     attr_accessor :label
 
     # rubocop:disable Naming/MethodParameterName
-    def initialize(data, children: [], op: '', label: '')
+    def initialize(data, children: [], op: Operation.new, label: '')
       @data = data.to_f
 
       @children = children
+      # Unfortunately, we have to wrap the operation into a proper object, to avoid
+      # problems with the GraphViz ID creation
       @op = op
       @label = label
     end
@@ -19,13 +21,13 @@ module TinyGrad
     def +(other)
       raise_error_if_not_value(other, '+')
 
-      Value.new(@data + other.data, children: [self, other], op: '+')
+      Value.new(@data + other.data, children: [self, other], op: Operation.new('+'))
     end
 
     def *(other)
       raise_error_if_not_value(other, '*')
 
-      Value.new(@data * other.data, children: [self, other], op: '*')
+      Value.new(@data * other.data, children: [self, other], op: Operation.new('*'))
     end
 
     def to_s

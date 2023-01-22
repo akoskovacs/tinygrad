@@ -3,6 +3,8 @@
 module TinyGrad
   # Generates an SVG Digraph visualization for an expression tree via GraphViz
   class Graph
+    attr_reader :nodes, :edges
+
     def draw(root, file_name:)
       raise ArgumentError, 'No output file is given' if file_name.empty?
 
@@ -18,31 +20,31 @@ module TinyGrad
       @nodes = Set.new
       @edges = Set.new
 
-      build_nodes_and_edges_of(root)
+      build_children_of(root)
 
       @nodes.each { |node| draw_node_for(node) }
 
       @edges.each do |edge|
         start = id_of(edge[0])
-        stop = id_of(edge[1].op)
+        stop  = id_of(edge[1].op)
         @graph.add_edge(start, stop)
       end
 
       @graph
     end
 
-    def build_nodes_and_edges_of(node)
+    def build_children_of(node)
       @nodes.add(node) unless @nodes.include?(node)
 
       node.children.each do |child|
         @edges.add([child, node])
-        build_nodes_and_edges_of(child)
+        build_children_of(child)
       end
     end
 
     def draw_node_for(node)
       node_id = id_of(node)
-      @graph.add_node(node_id, label: "#{node.label} | #{node.data}", shape: 'record')
+      @graph.add_node(node_id, label: "#{node.label} | data: #{node.data}", shape: 'record')
 
       return if node.op.empty?
 
