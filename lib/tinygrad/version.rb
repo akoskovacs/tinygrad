@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
-module Tinygrad
-  VERSION = "0.1.0"
+# Container module for all TinyGrad entities
+module TinyGrad
+  VERSION = '0.1.0'
 end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "tinygrad/version"
+require_relative 'tinygrad/version'
+require_relative 'tinygrad/value'
+require_relative 'tinygrad/graph'
 
-module Tinygrad
-  class Error < StandardError; end
-  # Your code goes here...
-end
+require 'ruby-graphviz'

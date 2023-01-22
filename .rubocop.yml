@@ -1,13 +1,44 @@
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
+  Exclude:
+    - spec/**/*
+    - bin/**/*
+    - test/**/*
+    - Gemfile
+    - Rakefile
+    - config.ru
+    - vendor/**/*
 
-Style/StringLiterals:
+Style/AndOr:
   Enabled: true
-  EnforcedStyle: double_quotes
 
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: false
+
+Layout/IndentationConsistency:
+  EnforcedStyle: normal
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/MultilineHashBraceLayout:
+  EnforcedStyle: new_line
+
+Layout/MultilineArrayBraceLayout:
+  EnforcedStyle: new_line
+
+Style/HashSyntax:
+  Enabled: false
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context']
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
 
 Layout/LineLength:
-  Max: 120
+  Exclude:
+    - spec/**/*.rb

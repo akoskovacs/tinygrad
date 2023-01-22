@@ -12,4 +12,14 @@ require "tinygrad"
 # Pry.start
 
 require "irb"
+
+$a = TinyGrad::Value.new(2, label: "a")
+$b = TinyGrad::Value.new(-3, label: "b")
+$c = TinyGrad::Value.new(10, label: "c")
+$d = $a * $b + $c
+$d.label = "d"
+
+g = TinyGrad::Graph.new
+g.draw($d, file_name: "d.svg")
+
 IRB.start(__FILE__)
