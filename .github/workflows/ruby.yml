@@ -36,5 +36,7 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Rubocop
       run: bundle exec rubocop
+    - name: Setup Graphviz
+      uses: ts-graphviz/setup-graphviz@v1
     - name: Run tests
       run: bundle exec rspec
