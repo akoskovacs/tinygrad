@@ -20,7 +20,23 @@ x2w2 = x2*w2 ; x2w2.label = 'x2*w2'
 
 x1w1x2w2 = x1w1 + x2w2 ; x1w1x2w2.label = 'x1*w1 + x2*w2'
 n = x1w1x2w2 + b ; n.label = 'n'
-o = n.tanh ; o.label = 'o'
+o = n.tanh ; o.label = 'o' ; o.grad = 1.0
+# o.backward.call
+# n.backward.call
+# x1w1x2w2.backward.call
+# x2w2.backward.call
+# x1w1.backward.call
+# b.backward.call
+# w2.backward.call
+# w1.backward.call
+# x1.backward.call
+# x2.backward.call
+sorted = o.topological_sort.to_a.reverse
+puts 'sorted:', sorted.map(&:to_s)
+
+sorted.map do |elem|
+  elem.backward.call
+end
 
 # Draw the DAG into an SVG file
 $graph = TinyGrad::Graph.new

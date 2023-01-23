@@ -11,6 +11,7 @@ RSpec.describe TinyGrad::Value do
   it { is_expected.to respond_to(:data) }
   it { is_expected.to respond_to(:grad) }
   it { is_expected.to respond_to(:tanh) }
+  it { is_expected.to respond_to(:backward) }
   it { expect(subject.data).to eq(1) }
   it { expect(subject.to_s).to eq("Value(data: 1.0)") }
 
@@ -112,6 +113,10 @@ RSpec.describe TinyGrad::Value do
     it "calculates tanh() correctly" do
       expect(subject.data).to be_within(0.00001).of(0.8617231)
     end
+  end
+
+  describe '#backward' do
+
   end
 
   context "in expressions" do
