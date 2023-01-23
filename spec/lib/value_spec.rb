@@ -9,6 +9,8 @@ RSpec.describe TinyGrad::Value do
   it { is_expected.to respond_to(:*) }
   it { is_expected.to respond_to(:to_s) }
   it { is_expected.to respond_to(:data) }
+  it { is_expected.to respond_to(:grad) }
+  it { is_expected.to respond_to(:tanh) }
   it { expect(subject.data).to eq(1) }
   it { expect(subject.to_s).to eq("Value(data: 1.0)") }
 
@@ -22,6 +24,10 @@ RSpec.describe TinyGrad::Value do
     it "can be labelled" do
       x = described_class.new(10, label: "x")
       expect(x.label).to be("x")
+    end
+
+    it 'defaults to 0.0 as the gradient' do
+      expect(subject.grad).to be(0.0)
     end
 
     it "can allows label modification" do
@@ -87,6 +93,24 @@ RSpec.describe TinyGrad::Value do
 
     it "has the right operation" do
       expect(c.op.name).to eq("*")
+    end
+  end
+
+  describe "#tanh" do
+    let(:a) { described_class.new(1.3) }
+    subject { a.tanh }
+
+    it "the type is Value" do
+      expect(subject).to be_a(described_class)
+    end
+
+    it "has the right children" do
+      expect(subject.children[0]).to eq(a)
+      expect(subject.children.size).to eq(1)
+    end
+
+    it "calculates tanh() correctly" do
+      expect(subject.data).to be_within(0.00001).of(0.8617231)
     end
   end
 

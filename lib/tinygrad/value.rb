@@ -3,7 +3,7 @@
 module TinyGrad
   # Base value object for the DAG
   class Value
-    attr_reader :data, :children, :op
+    attr_reader :data, :grad, :children, :op
     attr_accessor :label
 
     # rubocop:disable Naming/MethodParameterName
@@ -13,6 +13,7 @@ module TinyGrad
       @data = data.to_f
 
       @children = children
+      @grad = 0.0
       @op = op
       @label = label
     end
@@ -28,6 +29,11 @@ module TinyGrad
       raise_error_if_not_value(other, '*')
 
       Value.new(@data * other.data, children: [self, other], op: Operation.new('*'))
+    end
+
+    def tanh
+      # Also: (Math.exp(2 * @data) - 1)/(Math.exp(2 * @data) + 1)
+      Value.new(Math.tanh(@data), children: [self], op: Operation.new('tanh'))
     end
 
     def to_s

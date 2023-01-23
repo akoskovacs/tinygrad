@@ -44,7 +44,7 @@ module TinyGrad
 
     def draw_node_for(node)
       node_id = id_of(node)
-      @graph.add_node(node_id, label: "#{node.label} | data: #{node.data}", shape: 'record')
+      @graph.add_node(node_id, label: "#{node.label} | data: #{node.data} | grad: #{node.grad}", shape: 'record')
 
       return if node.op.empty?
 
