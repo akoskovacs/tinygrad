@@ -3,7 +3,7 @@
 
 _A blatant copy of Andrej Karpathy's micrograd Autograd engine, with a PyTorch-like API in Ruby._
 
-Look for the original version, in Python at https://github.com/karpathy/micrograd.
+Look for the original version, in Python at [karpathy/micrograd](https://github.com/karpathy/micrograd).
 
 Also watch his excellent lecture on the subject [here on Youtube](https://www.youtube.com/watch?v=VMj-3S1tku0&ab_channel=AndrejKarpathy).
 
@@ -34,7 +34,7 @@ To generate the `DAG` (Directed acyclic graph), just use the `TinyGrad::Graph` c
 graph = TinyGrad::Graph.new
 graph.draw(l, file_name: 'simple_expression.svg')
 ```
-This will generate the follwing image, of the forward pass:
+This will generate the following image, of the forward pass:
 ![Expression DAG](docs/simple_expression.svg)
 
 ## Development
