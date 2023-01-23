@@ -7,12 +7,12 @@ module TinyGrad
     attr_accessor :label
 
     # rubocop:disable Naming/MethodParameterName
+    # Unfortunately, we have to wrap the operation into a proper object, to avoid
+    # problems with the GraphViz ID creation
     def initialize(data, children: [], op: Operation.new, label: '')
       @data = data.to_f
 
       @children = children
-      # Unfortunately, we have to wrap the operation into a proper object, to avoid
-      # problems with the GraphViz ID creation
       @op = op
       @label = label
     end

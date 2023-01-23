@@ -1,24 +1,41 @@
-# Tinygrad
+# TinyGrad
+[![Ruby](https://github.com/akoskovacs/tinygrad/actions/workflows/ruby.yml/badge.svg)](https://github.com/akoskovacs/tinygrad/actions/workflows/ruby.yml)
 
-TODO: Delete this and the text below, and describe your gem
+_A blatant copy of Andrej Karpathy's micrograd Autograd engine, with a PyTorch-like API in Ruby._
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tinygrad`. To experiment with that code, run `bin/console` for an interactive prompt.
+Look for the original version, in Python at https://github.com/karpathy/micrograd.
 
-## Installation
+Also watch his excellent lecture on the subject [here on Youtube](https://www.youtube.com/watch?v=VMj-3S1tku0&ab_channel=AndrejKarpathy).
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
-Install the gem and add to the application's Gemfile by executing:
+## Installation [TODO]
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+```sh
+gem install tinygrad
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+The usage works the nearly the same way as the original, just with a `Ruby` syntax:
+```ruby
+# Create the DAG of expression 'l' out of simple components,
+# label each one for clarity on the image
+a = TinyGrad::Value.new(2, label: 'a')
+b = TinyGrad::Value.new(-3, label: 'b')
+c = TinyGrad::Value.new(10, label: 'c')
+e = a * b ; e.label = 'e'
+d = e + c ; d.label = 'd'
+f = TinyGrad::Value.new(-2, label: 'f')
+l = d * f ; l.label = 'L'
+```
+
+To generate the `DAG` (Directed acyclic graph), just use the `TinyGrad::Graph` class:
+```ruby
+graph = TinyGrad::Graph.new
+graph.draw(l, file_name: 'simple_expression.svg')
+```
+This will generate the follwing image, of the forward pass:
+![Expression DAG](docs/simple_expression.svg)
 
 ## Development
 
