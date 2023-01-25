@@ -3,6 +3,8 @@
 module TinyGrad
   # Base value object for the DAG
   class Value
+    FLOAT_FORMAT = '%.4f'
+
     attr_reader :data, :children, :op
     attr_accessor :label, :backward, :grad
 
@@ -53,8 +55,7 @@ module TinyGrad
     end
 
     def graphviz_label
-      str_format = '%.4f'
-      "#{@label} | data: #{str_format % @data} | grad: #{str_format % @grad}"
+      format_data('', ' | ')
     end
 
     def topological_sort(visited = Set.new, topo = [])
@@ -69,11 +70,31 @@ module TinyGrad
       topo
     end
 
+    def backpropagate!
+      @grad = 1.0
+      topological_sort.reverse.each do |node|
+        node.backward.call
+      end
+    end
+
     def to_s
-      "Value(label: #{@label}, data: #{@data})"
+      "Value(#{format_data('label: ')})"
     end
 
     private
+
+    def format_data(name = '', separator = ', ')
+      format_label(name, separator) +
+        %i[data grad]
+        .map { |member| "#{member}: #{FLOAT_FORMAT % send(member)}" }
+        .join(separator)
+    end
+
+    def format_label(name, separator = ', ')
+      return '' if @label.empty?
+
+      "#{name}#{@label}#{separator}"
+    end
 
     def raise_error_if_not_value(other, operator)
       raise ArgumentError, "right value of '#{operator}' is not a Value" unless other.is_a?(Value)
