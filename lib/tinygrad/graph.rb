@@ -6,6 +6,7 @@ module TinyGrad
     attr_reader :nodes, :edges
 
     def draw(root, file_name:)
+      raise ArgumentError, 'Not a TinyGrad::Value' unless root.is_a?(TinyGrad::Value)
       raise ArgumentError, 'No output file is given' if file_name.empty?
 
       @graph = GraphViz.new(:G, type: :digraph, rankdir: 'LR')
@@ -44,7 +45,7 @@ module TinyGrad
 
     def draw_node_for(node)
       node_id = id_of(node)
-      @graph.add_node(node_id, label: "#{node.label} | data: #{node.data} | grad: #{node.grad}", shape: 'record')
+      @graph.add_node(node_id, label: node.graphviz_label, shape: 'record')
 
       return if node.op.empty?
 

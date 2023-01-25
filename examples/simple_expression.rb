@@ -13,7 +13,7 @@ f = TinyGrad::Value.new(-2, label: 'f')
 l = d * f ; l.label = 'L'
 
 # Draw the DAG into an SVG file
-$graph = TinyGrad::Graph.new
-$graph.draw(l, file_name: 'simple_expression.svg')
+graph = TinyGrad::Graph.new
+graph.draw(l, file_name: 'simple_expression.svg')
 
 # rubocop:enable all

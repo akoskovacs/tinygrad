@@ -23,6 +23,12 @@ RSpec.describe TinyGrad::Graph do
       end.to raise_error(ArgumentError, "No output file is given")
     end
 
+    it "raises error when an empty file name is passed" do
+      expect do
+        subject.draw(nil, file_name: "aaa.svg")
+      end.to raise_error(ArgumentError, "Not a TinyGrad::Value")
+    end
+
     it "has to create an svg file" do
       subject.draw(d, file_name: test_file_name)
       expect(File.exist?(test_file_name)).to be_truthy

@@ -37,6 +37,37 @@ graph.draw(l, file_name: 'simple_expression.svg')
 This will generate the following image, of the forward pass:
 ![Expression DAG](docs/simple_expression.svg)
 
+This example shows backpropagation on a simple neuron, built manually:
+```ruby
+# Inputs x1, x2
+x1 = TinyGrad::Value.new(2, label: 'x1')
+x2 = TinyGrad::Value.new(0, label: 'x2')
+
+# Weights w1, w2
+w1 = TinyGrad::Value.new(-3, label: 'w1')
+w2 = TinyGrad::Value.new(1, label: 'w2')
+
+# Bias of the neuron
+b = TinyGrad::Value.new(6.8813735870195432, label: 'b')
+
+# x1*w1 + x2*w2 + b
+x1w1 = x1*w1 ; x1w1.label = 'x1*w1'
+x2w2 = x2*w2 ; x2w2.label = 'x2*w2'
+
+x1w1x2w2 = x1w1 + x2w2 ; x1w1x2w2.label = 'x1*w1 + x2*w2'
+n = x1w1x2w2 + b ; n.label = 'n'
+o = n.tanh ; o.label = 'o' ; o.grad = 1.0
+
+# Do backpropagation on the output node:
+o.backpropagate!
+
+# Draw the DAG into an SVG file
+graph = TinyGrad::Graph.new
+graph.draw(o, file_name: 'manual_neuron.svg')
+```
+This will generate the following image, of the forward and backward passes:
+![Expression DAG](docs/manual_neuron.svg)
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

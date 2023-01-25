@@ -20,10 +20,13 @@ x2w2 = x2*w2 ; x2w2.label = 'x2*w2'
 
 x1w1x2w2 = x1w1 + x2w2 ; x1w1x2w2.label = 'x1*w1 + x2*w2'
 n = x1w1x2w2 + b ; n.label = 'n'
-o = n.tanh ; o.label = 'o'
+o = n.tanh ; o.label = 'o' ; o.grad = 1.0
+
+# Do backpropagation:
+o.backpropagate!
 
 # Draw the DAG into an SVG file
-$graph = TinyGrad::Graph.new
-$graph.draw(o, file_name: 'manual_neuron.svg')
+graph = TinyGrad::Graph.new
+graph.draw(o, file_name: 'manual_neuron.svg')
 
 # rubocop:enable all
